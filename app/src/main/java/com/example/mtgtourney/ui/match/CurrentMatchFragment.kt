@@ -25,7 +25,7 @@ class CurrentMatchFragment : Fragment() {
     private var _binding: FragmentCurrentMatchBinding? = null
 
     // This property is only valid between onCreateView and
-    // onDestroyView.
+    // onDestroyView. This is test
     private val binding get() = _binding!!
     private var selectedDeck: Deck? = null
     private var playerOneVictoryCount = 0
