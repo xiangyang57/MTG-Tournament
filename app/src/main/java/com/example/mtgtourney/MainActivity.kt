@@ -1,7 +1,6 @@
 package com.example.mtgtourney
 
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +9,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.mtgtourney.databinding.ActivityMainBinding
-import com.example.mtgtourney.ui.stats.NotificationsViewModel
 
 class MainActivity : AppCompatActivity() {
 

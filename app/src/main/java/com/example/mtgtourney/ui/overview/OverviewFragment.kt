@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.mtgtourney.MainViewModel
-import com.example.mtgtourney.data.Tournament
 import com.example.mtgtourney.databinding.FragmentDashboardBinding
 
 class OverviewFragment : Fragment() {
@@ -20,6 +19,7 @@ class OverviewFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private var adapter: RoundPagerAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,22 +44,15 @@ class OverviewFragment : Fragment() {
 
         }
         mainViewModel.tournamentLiveData.observe(viewLifecycleOwner) {
-            binding.textDashboard.text = getOverviewText(it)
-        }
-        return root
-    }
-
-    fun getOverviewText(tournament: Tournament): String {
-        val builder = StringBuilder()
-        for (i in tournament.brackets.indices) {
-            builder.append("\n----------------Round ${i+1}----------------\n\n")
-            for (j in tournament.brackets[i].indices) {
-                val match = tournament.brackets[i][j]
-                builder.append("${match.playerA.commander} vs ${match.playerB?.commander}\n" +
-                        "Winner: ${match.winner?.commander}\n\n")
+            adapter = RoundPagerAdapter(activity as FragmentActivity, it.brackets)
+            binding.viewpager.adapter = null
+            binding.viewpager.post { binding.viewpager.adapter = adapter
+                binding.viewpager.post {
+                    binding.viewpager.currentItem = it.brackets.size-1
+                }
             }
         }
-        return builder.toString()
+        return root
     }
 
     override fun onDestroyView() {
