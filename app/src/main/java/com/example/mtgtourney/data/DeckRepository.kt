@@ -1,6 +1,7 @@
 package com.example.mtgtourney.data
 
 import android.content.Context
+import android.util.Log
 import com.example.mtgtourney.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

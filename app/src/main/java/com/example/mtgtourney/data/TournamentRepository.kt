@@ -2,9 +2,9 @@ package com.example.mtgtourney.data
 
 import android.content.Context
 import com.example.mtgtourney.createTournament
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.google.gson.Gson;
 
 class TournamentRepository {
 
@@ -32,6 +32,9 @@ class TournamentRepository {
             }
         }
 
+    /**
+     * Recreate the tournament based on size
+     */
     suspend fun updateTournament(appContext: Context, tournament: Tournament) {
         withContext(Dispatchers.IO) {
             appContext.deleteFile(TOURNAMENT)

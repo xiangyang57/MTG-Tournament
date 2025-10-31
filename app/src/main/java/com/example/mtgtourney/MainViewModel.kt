@@ -1,6 +1,7 @@
 package com.example.mtgtourney
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,20 +20,22 @@ class MainViewModel(): ViewModel() {
 
     fun initTournament(context: Context) {
         viewModelScope.launch {
-            val tournament = withContext(Dispatchers.IO) {
+            val tournament =
                 // This block runs on the IO dispatcher (off the main thread)
                 // Perform network request or database query here
                 tournamentRepository.getTournament(context, deckRepository.getDecks(context))
-            }
             withContext(Dispatchers.Main) {
                 tournamentLiveData.value = tournament
             }
         }
     }
 
-    fun resetTournament(context: Context) {
+    fun resetTournament(context: Context, tournamentSize: Int) {
         viewModelScope.launch {
-            tournamentRepository.updateTournament(context, Tournament())
+            val decks = deckRepository.getDecks(context)
+            tournamentRepository.updateTournament(
+                context,
+                decks.createTournament(tournamentSize))
             initTournament(context)
         }
     }

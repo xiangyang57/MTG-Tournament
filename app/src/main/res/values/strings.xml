@@ -3,4 +3,8 @@
     <string name="title_current_match">Current Match</string>
     <string name="title_overview">Overview</string>
     <string name="title_stats">Stats</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_title">Reset Tournament</string>
+    <string name="dialog_radio_selector">Please select how many decks will participate</string>
 </resources>

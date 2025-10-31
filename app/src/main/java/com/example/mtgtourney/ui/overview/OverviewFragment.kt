@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.mtgtourney.MainViewModel
 import com.example.mtgtourney.databinding.FragmentDashboardBinding
+import com.example.mtgtourney.ui.reset.ResetDialogFragment
 
 class OverviewFragment : Fragment() {
 
@@ -32,17 +33,13 @@ class OverviewFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.reset.setOnClickListener {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-            builder
-                .setMessage("Are you sure you want to reset the tournament?")
-                .setPositiveButton("Yes") { _, _ ->
-                    mainViewModel.resetTournament(requireContext())
-                }
-                .setNegativeButton("No") {_,_ ->}
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+            val bottomSheet = ResetDialogFragment()
+
+            // Show the BottomSheet using parentFragmentManager
+            bottomSheet.show(parentFragmentManager, "ResetDialogFragment")
 
         }
+        binding.viewpager.setSaveEnabled(false)
         mainViewModel.tournamentLiveData.observe(viewLifecycleOwner) {
             adapter = RoundPagerAdapter(activity as FragmentActivity, it.brackets)
             binding.viewpager.adapter = null
