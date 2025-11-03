@@ -82,6 +82,7 @@ class CurrentMatchFragment : Fragment() {
         }
 
         mainViewModel.updateTournament(requireContext(), tournament)
+
     }
 
     private fun findNextMatch(tournament: Tournament): Match? {
