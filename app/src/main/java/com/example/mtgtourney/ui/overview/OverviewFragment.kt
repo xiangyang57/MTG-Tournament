@@ -34,9 +34,7 @@ class OverviewFragment : Fragment() {
         binding.reset.setOnClickListener {
             val bottomSheet = ResetDialogFragment()
 
-            // Show the BottomSheet using parentFragmentManager
             bottomSheet.show(parentFragmentManager, "ResetDialogFragment")
-
         }
         binding.viewpager.setSaveEnabled(false)
         mainViewModel.tournamentLiveData.observe(viewLifecycleOwner) {

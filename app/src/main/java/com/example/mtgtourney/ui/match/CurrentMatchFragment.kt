@@ -63,6 +63,11 @@ class CurrentMatchFragment : Fragment() {
 
     }
 
+    private fun logStats(winner: Deck, loser: Deck, tournament: Tournament) {
+        mainViewModel.updateStats(requireContext(), winner, loser,
+            tournament.brackets[tournament.brackets.lastIndex].size == 1)
+    }
+
     private fun updateTournament(match: Match, tournament: Tournament) {
         val currentBracket = tournament.brackets[tournament.brackets.lastIndex]
         if (currentBracket.size > 1 && match == currentBracket[currentBracket.lastIndex]) {
@@ -152,6 +157,7 @@ class CurrentMatchFragment : Fragment() {
                 .setMessage("${selectedDeck?.commander} has railed ${loser?.commander}")
                 .setTitle("Victory")
                 .setOnDismissListener{
+                    logStats(match.winner!!, loser!!, tournament)
                     updateTournament(match, tournament)
                     refreshUI(tournament)
                 }

@@ -7,10 +7,18 @@ import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.collections.contains
 
 @ActivityRetainedScoped
 class StatsRepository @Inject constructor() {
+
+    private val overview: MutableList<DeckOverview> = mutableListOf()
+    private val deckStatsMap = hashMapOf<String, DeckOverview>()
+
     suspend fun getStats(appContext: Context): List<DeckOverview> =
+        if (overview.isEmpty()) getStatsFromFile(appContext) else overview
+
+    private suspend fun getStatsFromFile(appContext: Context): List<DeckOverview> =
         withContext(Dispatchers.IO) {
             try {
                 val statsFile =
@@ -20,7 +28,12 @@ class StatsRepository @Inject constructor() {
                         }
                     }
                 val gson = Gson()
-                gson.fromJson(statsFile, object : TypeToken<List<DeckOverview>>() {}.type)
+                val stats: List<DeckOverview> =
+                    gson.fromJson(statsFile, object : TypeToken<List<DeckOverview>>() {}.type)
+                overview.clear()
+                overview.addAll(stats)
+                refreshMapping()
+                stats
             } catch (e: Exception) {
                 listOf()
             }
@@ -29,7 +42,7 @@ class StatsRepository @Inject constructor() {
     /**
      * Recreate the tournament based on size
      */
-    suspend fun updateStats(appContext: Context, stats: List<DeckOverview>) {
+    private suspend fun updateStats(appContext: Context, stats: List<DeckOverview>) {
         withContext(Dispatchers.IO) {
             appContext.deleteFile(STATS)
             appContext.openFileOutput(STATS, Context.MODE_PRIVATE).use {
@@ -39,4 +52,37 @@ class StatsRepository @Inject constructor() {
         }
     }
 
+    suspend fun logMatchResult(context: Context, winner: Deck, loser:Deck, isFinals: Boolean) {
+        if (overview.isEmpty()) {
+            getStats(context)
+        }
+        if (!deckStatsMap.contains(winner.commander)) {
+            val deckOverview = DeckOverview(winner)
+            overview.add(deckOverview)
+            deckStatsMap.put(winner.commander, deckOverview)
+        }
+        deckStatsMap.get(winner.commander)?.let {
+            it.overallWin++
+            if (isFinals) {
+                it.tournamentWin++
+            }
+        }
+
+        if (!deckStatsMap.contains(loser.commander)) {
+            val deckOverview = DeckOverview(winner)
+            overview.add(deckOverview)
+            deckStatsMap.put(loser.commander, deckOverview)
+        }
+        deckStatsMap.get(winner.commander)?.let {
+            it.overallLoss++
+        }
+        updateStats(context, overview)
+    }
+
+    private fun refreshMapping() {
+        deckStatsMap.clear()
+        for (stat in overview) {
+            deckStatsMap.put(stat.deck.commander, stat)
+        }
+    }
 }

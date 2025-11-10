@@ -1,12 +1,10 @@
 package com.example.mtgtourney
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mtgtourney.data.Deck
-import com.example.mtgtourney.data.DeckOverview
 import com.example.mtgtourney.data.DeckRepository
 import com.example.mtgtourney.data.StatsRepository
 import com.example.mtgtourney.data.Tournament
@@ -19,14 +17,12 @@ import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class MainViewModel@Inject constructor(
-    val tournamentRepository: TournamentRepository,
-    val deckRepository: DeckRepository,
-    val statsRepository: StatsRepository
+    private val tournamentRepository: TournamentRepository,
+    private val deckRepository: DeckRepository,
+    private val statsRepository: StatsRepository
 ) : ViewModel() {
 
     val tournamentLiveData: MutableLiveData<Tournament> = MutableLiveData()
-    val overviewLiveData: MutableLiveData<MutableList<DeckOverview>> = MutableLiveData()
-    private val deckStatsMap = hashMapOf<String, DeckOverview>()
 
     fun initTournament(context: Context) {
         viewModelScope.launch {
@@ -35,7 +31,6 @@ class MainViewModel@Inject constructor(
                 // Perform network request or database query here
                 tournamentRepository.getTournament(context, deckRepository.getDecks(context))
             withContext(Dispatchers.Main) {
-                Log.i("yaxiang", "tournament size " + tournament.brackets.size)
                 tournamentLiveData.value = tournament
             }
         }
@@ -57,43 +52,9 @@ class MainViewModel@Inject constructor(
         }
     }
 
-    fun updateStats(context: Context, winner: Deck, loser: Deck) {
+    fun updateStats(context: Context, winner: Deck, loser: Deck, isFinals: Boolean = false) {
         viewModelScope.launch {
-            if (overviewLiveData.value == null) {
-                statsRepository.getStats(context).run {
-                    val stats = this.toMutableList()
-                    overviewLiveData.value = stats
-                    refreshMapping(stats)
-                }
-            }
-            if (!deckStatsMap.contains(winner.commander)) {
-                val deckOverview = DeckOverview(winner)
-                overviewLiveData.value?.apply {
-                    add(deckOverview)
-                }
-            }
-            deckStatsMap.get(winner.commander)?.let {
-                it.overallWin++
-            }
-
-            if (!deckStatsMap.contains(loser.commander)) {
-                val deckOverview = DeckOverview(winner)
-                overviewLiveData.value?.apply {
-                    add(deckOverview)
-                }
-            }
-            deckStatsMap.get(winner.commander)?.let {
-                it.overallLoss++
-            }
-            statsRepository.updateStats(context, overviewLiveData.value!!)
-
-        }
-    }
-
-    fun refreshMapping(stats: List<DeckOverview>) {
-        deckStatsMap.clear()
-        for (stat in stats) {
-            deckStatsMap.put(stat.deck.commander, stat)
+            statsRepository.logMatchResult(context, winner, loser, isFinals)
         }
     }
 }

@@ -8,7 +8,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.mtgtourney.databinding.FragmentNotificationsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StatsFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
@@ -23,7 +25,7 @@ class StatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val statsViewModel =
-            ViewModelProvider(this).get(StatsViewModel::class.java)
+            ViewModelProvider(this)[StatsViewModel::class.java]
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
