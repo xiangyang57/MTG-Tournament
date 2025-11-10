@@ -3,12 +3,23 @@ package com.example.mtgtourney.data
 import android.content.Context
 import com.example.mtgtourney.createTournament
 import com.google.gson.Gson
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class TournamentRepository {
+@ActivityRetainedScoped
+class TournamentRepository @Inject constructor() {
 
-    suspend fun getTournament(appContext: Context, decks: List<Deck>): Tournament =
+    private var current: Tournament? = null
+
+    suspend fun getTournament(appContext: Context, decks: List<Deck>): Tournament {
+        if (current != null) {
+            return current!!
+        }
+        return getTournamentFromFile(appContext, decks)
+    }
+    private suspend fun getTournamentFromFile(appContext: Context, decks: List<Deck>): Tournament =
         withContext(Dispatchers.IO) {
             val existingTournament = try {
                 val tournamentFile =
@@ -26,8 +37,10 @@ class TournamentRepository {
             if (existingTournament == null || existingTournament.brackets.isEmpty()) {
                 val tournament = decks.createTournament()
                 updateTournament(appContext, tournament)
+                current = tournament
                 tournament
             } else {
+                current = existingTournament
                 existingTournament
             }
         }
@@ -36,6 +49,7 @@ class TournamentRepository {
      * Recreate the tournament based on size
      */
     suspend fun updateTournament(appContext: Context, tournament: Tournament) {
+        current = tournament
         withContext(Dispatchers.IO) {
             appContext.deleteFile(TOURNAMENT)
             appContext.openFileOutput(TOURNAMENT, Context.MODE_PRIVATE).use {

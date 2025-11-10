@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.mtgtourney.MainViewModel
 import com.example.mtgtourney.databinding.FragmentResetDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResetDialogFragment: BottomSheetDialogFragment() {
     private var _binding: FragmentResetDialogBinding? = null
     private val binding get() = _binding!!
+    private val mainViewModel: MainViewModel by activityViewModels()
+    private val resetViewModel: ResetDialogViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,10 +24,6 @@ class ResetDialogFragment: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentResetDialogBinding.inflate(inflater, container, false)
-        val mainViewModel =
-            ViewModelProvider(activity as AppCompatActivity)[MainViewModel::class.java]
-        val resetViewModel =
-            ViewModelProvider(this)[ResetDialogViewModel::class.java]
         binding.viewModel = resetViewModel
 
         resetViewModel.selectionConfirmed.observe(viewLifecycleOwner) { selected ->

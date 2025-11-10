@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.example.mtgtourney.MainViewModel
 import com.example.mtgtourney.databinding.FragmentDashboardBinding
 import com.example.mtgtourney.ui.reset.ResetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OverviewFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
@@ -21,14 +21,13 @@ class OverviewFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private var adapter: RoundPagerAdapter? = null
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val mainViewModel =
-            ViewModelProvider(activity as AppCompatActivity)[MainViewModel::class.java]
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root

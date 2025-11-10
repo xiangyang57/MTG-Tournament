@@ -3,10 +3,13 @@ package com.example.mtgtourney.data
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class StatsRepository {
+@ActivityRetainedScoped
+class StatsRepository @Inject constructor() {
     suspend fun getStats(appContext: Context): List<DeckOverview> =
         withContext(Dispatchers.IO) {
             try {

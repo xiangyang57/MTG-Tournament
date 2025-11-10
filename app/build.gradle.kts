@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")// for annotation processing
 }
 
 android {
@@ -42,7 +45,7 @@ android {
 
 dependencies {
 
-    implementation("com.google.code.gson:gson:2.13.1")
+    implementation("com.google.code.gson:gson:2.13.2")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -51,6 +54,15 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation("com.google.dagger:hilt-android:2.57.2")
+    kapt("com.google.dagger:hilt-compiler:2.57.2")
+
+    // --- Hilt + Jetpack (for ViewModel / Fragment integration) ---
+    implementation("androidx.hilt:hilt-navigation-fragment:1.3.0")
+    kapt("androidx.hilt:hilt-compiler:1.3.0")
+
+    // --- Lifecycle / ViewModel ---
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.5")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

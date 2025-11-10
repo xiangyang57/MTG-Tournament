@@ -3,8 +3,11 @@ package com.example.mtgtourney.ui.reset
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mtgtourney.R
+import dagger.hilt.android.scopes.ViewModelScoped
+import jakarta.inject.Inject
 
-class ResetDialogViewModel: ViewModel() {
+@ViewModelScoped
+class ResetDialogViewModel@Inject constructor(): ViewModel() {
 
     // Keep track of selected radio button ID
     val selectedOptionId = MutableLiveData(R.id.option2)

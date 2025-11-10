@@ -5,11 +5,13 @@ import android.util.Log
 import com.example.mtgtourney.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-
-class DeckRepository {
+@ActivityRetainedScoped
+class DeckRepository @Inject constructor(){
 
     suspend fun getDecks(appContext: Context): List<Deck> =
         withContext(Dispatchers.IO) {
@@ -41,5 +43,4 @@ class DeckRepository {
         val gson = Gson()
         return gson.fromJson(json, object : TypeToken<List<Deck>>() {}.type)
     }
-
 }

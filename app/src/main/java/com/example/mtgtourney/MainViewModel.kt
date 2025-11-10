@@ -1,6 +1,7 @@
 package com.example.mtgtourney
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,15 +11,19 @@ import com.example.mtgtourney.data.DeckRepository
 import com.example.mtgtourney.data.StatsRepository
 import com.example.mtgtourney.data.Tournament
 import com.example.mtgtourney.data.TournamentRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel(): ViewModel() {
+@HiltViewModel
+class MainViewModel@Inject constructor(
+    val tournamentRepository: TournamentRepository,
+    val deckRepository: DeckRepository,
+    val statsRepository: StatsRepository
+) : ViewModel() {
 
-    val tournamentRepository = TournamentRepository()
-    val deckRepository = DeckRepository()
-    val statsRepository = StatsRepository()
     val tournamentLiveData: MutableLiveData<Tournament> = MutableLiveData()
     val overviewLiveData: MutableLiveData<MutableList<DeckOverview>> = MutableLiveData()
     private val deckStatsMap = hashMapOf<String, DeckOverview>()
@@ -30,6 +35,7 @@ class MainViewModel(): ViewModel() {
                 // Perform network request or database query here
                 tournamentRepository.getTournament(context, deckRepository.getDecks(context))
             withContext(Dispatchers.Main) {
+                Log.i("yaxiang", "tournament size " + tournament.brackets.size)
                 tournamentLiveData.value = tournament
             }
         }
@@ -90,6 +96,4 @@ class MainViewModel(): ViewModel() {
             deckStatsMap.put(stat.deck.commander, stat)
         }
     }
-
-
 }
