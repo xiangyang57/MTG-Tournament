@@ -69,11 +69,11 @@ class StatsRepository @Inject constructor() {
         }
 
         if (!deckStatsMap.contains(loser.commander)) {
-            val deckOverview = DeckOverview(winner)
+            val deckOverview = DeckOverview(loser)
             overview.add(deckOverview)
             deckStatsMap.put(loser.commander, deckOverview)
         }
-        deckStatsMap.get(winner.commander)?.let {
+        deckStatsMap.get(loser.commander)?.let {
             it.overallLoss++
         }
         updateStats(context, overview)

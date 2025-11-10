@@ -15,7 +15,6 @@ import com.example.mtgtourney.R
 import com.example.mtgtourney.data.Match
 import com.example.mtgtourney.databinding.FragmentRoundBinding
 
-
 class RoundFragment: Fragment() {
 
     private var _binding: FragmentRoundBinding? = null
@@ -47,7 +46,7 @@ class RoundFragment: Fragment() {
         recyclerView.adapter = adapter
         val dividerItemDecoration = DividerItemDecoration(
             recyclerView.getContext(),
-            LinearLayoutManager.VERTICAL // Use LinearLayoutManager.VERTICAL or HORIZONTAL
+            LinearLayoutManager.VERTICAL
         )
         ContextCompat.getDrawable(requireContext(), R.drawable.divider)?.let {
             dividerItemDecoration.setDrawable(it)

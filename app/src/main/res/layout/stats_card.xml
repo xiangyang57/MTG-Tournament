@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="java.text.DateFormat" />
+        <variable
+            name="overview"
+            type="com.example.mtgtourney.data.DeckOverview" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="@dimen/stat_profile"
+            android:layout_height="@dimen/stat_profile"
+            android:layout_margin="@dimen/margin_small"
+            app:cardCornerRadius="@dimen/margin_med">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/consecrated_sphinx"/>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/match_name"
+                android:textStyle="bold"
+                android:text="@{overview.deck.commander}"
+                tools:text="Commander"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/match_description"
+                android:text='@{"Tournament wins: " + overview.tournamentWin}'
+
+                tools:text="Tournament wins 1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/match_description"
+                android:text='@{"Total wins: " + overview.overallWin}'
+                tools:text="Total wins 1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/match_description"
+                android:text='@{"Total losses: " + overview.overallLoss}'
+                tools:text="Total losses 1"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</layout>

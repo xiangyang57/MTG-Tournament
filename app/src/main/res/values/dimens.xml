@@ -9,5 +9,7 @@
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_med">8dp</dimen>
     <dimen name="match_name">16sp</dimen>
+    <dimen name="match_description">14sp</dimen>
     <dimen name="match_loss_icon">48dp</dimen>
+    <dimen name="stat_profile">128dp</dimen>
 </resources>
