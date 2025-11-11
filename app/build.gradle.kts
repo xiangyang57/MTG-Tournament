@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
@@ -39,6 +40,11 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"  // For Kotlin 2.0.x
     }
 }
 
@@ -66,7 +72,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 
     // --- Compose---
-    implementation(platform("androidx.compose:compose-bom:2025.08.00"))
+    implementation(platform(libs.androidx.compose.bom.v20240200))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)

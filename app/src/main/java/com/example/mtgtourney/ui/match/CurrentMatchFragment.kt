@@ -1,10 +1,12 @@
 package com.example.mtgtourney.ui.match
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.collection.LruCache
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.mtgtourney.MainViewModel
@@ -13,6 +15,7 @@ import com.example.mtgtourney.data.Deck
 import com.example.mtgtourney.data.Match
 import com.example.mtgtourney.data.Tournament
 import com.example.mtgtourney.databinding.FragmentCurrentMatchBinding
+import com.example.mtgtourney.databinding.FragmentCurrentMatchLegacyBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 const val UNSELECTED = 0.8F
@@ -22,7 +25,7 @@ const val WIN_COUNT = 2
 @AndroidEntryPoint
 class CurrentMatchFragment : Fragment() {
 
-    private var _binding: FragmentCurrentMatchBinding? = null
+    private var _binding: FragmentCurrentMatchLegacyBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView. This is test
@@ -37,10 +40,11 @@ class CurrentMatchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCurrentMatchBinding.inflate(inflater, container, false)
+        _binding = FragmentCurrentMatchLegacyBinding.inflate(inflater, container, false)
         mainViewModel.tournamentLiveData.observe(viewLifecycleOwner) {
             refreshUI(it)
         }
+        val cache = LruCache<String, Bitmap>(20)
          return binding.root
     }
 

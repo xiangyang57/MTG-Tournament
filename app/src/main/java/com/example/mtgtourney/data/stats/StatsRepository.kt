@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.mtgtourney.data.Deck
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -14,16 +16,19 @@ class StatsRepository @Inject constructor(
 
     private val overview: MutableList<DeckOverview> = mutableListOf()
     private val deckStatsMap = hashMapOf<String, DeckOverview>()
-
+    private val mutex = Mutex()
     suspend fun getStats(): List<DeckOverview> =
         if (overview.isEmpty()) getStatsFromFile() else overview
 
+
     private suspend fun getStatsFromFile(): List<DeckOverview> =
         withContext(Dispatchers.IO) {
-            overview.clear()
-            overview.addAll(deckOverviewDao.getAllDeckOverviews())
-            refreshMapping()
-            overview
+            mutex.withLock {
+                overview.clear()
+                overview.addAll(deckOverviewDao.getAllDeckOverviews())
+                refreshMapping()
+                overview
+            }
         }
 
     suspend fun logMatchResult(winner: Deck, loser: Deck, isFinals: Boolean) {

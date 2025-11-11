@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.match.CurrentMatchFragment">
+
+    <LinearLayout
+        android:id="@+id/center_divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/versus_icon"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/confirm_victor">
+
+        <ImageView
+            android:id="@+id/player_one_victory_one"
+            android:layout_width="@dimen/victory_icon"
+            android:layout_height="@dimen/victory_icon"
+            android:src="@drawable/victory_indicator"
+            android:layout_marginHorizontal="@dimen/margin_small"/>
+
+        <ImageView
+            android:id="@+id/player_one_victory_two"
+            android:layout_width="@dimen/victory_icon"
+            android:layout_height="@dimen/victory_icon"
+            android:src="@drawable/victory_indicator"
+            android:layout_marginHorizontal="@dimen/margin_small"/>
+
+        <TextView
+            android:id="@+id/versus"
+            android:layout_width="@dimen/versus_icon"
+            android:layout_height="@dimen/versus_icon"
+            android:gravity="center"
+            android:text="VS"
+            android:textSize="@dimen/victory_icon"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@drawable/victory_indicator"
+            android:layout_marginHorizontal="48dp"/>
+
+
+        <ImageView
+            android:id="@+id/player_two_victory_one"
+            android:layout_width="@dimen/victory_icon"
+            android:layout_height="@dimen/victory_icon"
+            android:src="@drawable/victory_indicator"
+            android:layout_marginHorizontal="@dimen/margin_small"/>
+
+        <ImageView
+            android:id="@+id/player_two_victory_two"
+            android:layout_width="@dimen/victory_icon"
+            android:layout_height="@dimen/victory_icon"
+            android:src="@drawable/victory_indicator"
+            android:layout_marginHorizontal="@dimen/margin_small"/>
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/player_one_card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/player_card_margin"
+        android:alpha="0.8"
+        app:cardBackgroundColor="@color/player1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/center_divider">
+
+        <TextView
+            android:id="@+id/player_one_deck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            tools:text="Player 1"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/player_two_card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/player_card_margin"
+        android:alpha="0.8"
+        app:cardBackgroundColor="@color/player2"
+        app:layout_constraintBottom_toTopOf="@id/confirm_victor"
+        app:layout_constraintTop_toBottomOf="@id/center_divider">
+        <TextView
+            android:id="@+id/player_two_deck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            tools:text="Player 2"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/confirm_victor"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button"
+        android:layout_marginHorizontal="16dp"
+        android:enabled="false"
+        android:text="Confirm Victor"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
