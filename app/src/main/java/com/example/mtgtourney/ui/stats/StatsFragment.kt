@@ -45,7 +45,7 @@ class StatsFragment : Fragment() {
             val adapter = StatsItemAdapter(it)
             recyclerView.adapter = adapter
         }
-        statsViewModel.getStats(requireContext())
+        statsViewModel.getStats()
         return root
     }
 

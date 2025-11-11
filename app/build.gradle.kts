@@ -2,9 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
-    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
-    kotlin("kapt")// for annotation processing
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -57,9 +56,9 @@ dependencies {
 
     // --- Hilt ---
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.fragment)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     // --- Room ---
     implementation(libs.androidx.room.runtime)

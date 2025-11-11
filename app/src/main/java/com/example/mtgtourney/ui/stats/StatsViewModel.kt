@@ -19,9 +19,9 @@ class StatsViewModel @Inject constructor(
 
     val stats = MutableLiveData<List<DeckOverview>>()
 
-    fun getStats(context: Context) {
+    fun getStats() {
         viewModelScope.launch {
-            val deck = statsRepository.getStats(context).toList().sortedWith(
+            val deck = statsRepository.getStats().toList().sortedWith(
                 compareByDescending<DeckOverview> { it.tournamentWin }
                     .thenByDescending { it.overallWin - it.overallLoss}
                     .thenByDescending { it.overallWin + it.overallLoss })
