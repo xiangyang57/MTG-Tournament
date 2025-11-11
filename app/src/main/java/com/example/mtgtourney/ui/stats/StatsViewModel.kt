@@ -23,7 +23,8 @@ class StatsViewModel @Inject constructor(
         viewModelScope.launch {
             val deck = statsRepository.getStats(context).toList().sortedWith(
                 compareByDescending<DeckOverview> { it.tournamentWin }
-                    .thenBy { it.overallLoss - it.overallWin})
+                    .thenByDescending { it.overallWin - it.overallLoss}
+                    .thenByDescending { it.overallWin + it.overallLoss })
             withContext(Dispatchers.Main) {
                 stats.value = deck
             }
