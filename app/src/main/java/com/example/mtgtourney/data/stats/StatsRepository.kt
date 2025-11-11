@@ -1,13 +1,11 @@
-package com.example.mtgtourney.data
+package com.example.mtgtourney.data.stats
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.mtgtourney.data.Deck
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.collections.contains
 
 @ActivityRetainedScoped
 class StatsRepository @Inject constructor(
@@ -28,43 +26,31 @@ class StatsRepository @Inject constructor(
             overview
         }
 
-    private suspend fun updateStat(deckOverview: DeckOverview) {
-        deckOverviewDao.updateDeckOverView(deckOverview)
-    }
-
-    private suspend fun addStat(deckOverview: DeckOverview) {
-        deckOverviewDao.addDeckOverView(deckOverview)
-    }
-
-
-
-    suspend fun logMatchResult(context: Context, winner: Deck, loser:Deck, isFinals: Boolean) {
+    suspend fun logMatchResult(winner: Deck, loser: Deck, isFinals: Boolean) {
         if (overview.isEmpty()) {
             getStats()
         }
         if (!deckStatsMap.contains(winner.commander)) {
             val deckOverview = DeckOverview(winner)
             overview.add(deckOverview)
-            addStat(deckOverview)
             deckStatsMap.put(winner.commander, deckOverview)
         }
-        deckStatsMap.get(winner.commander)?.let {
+        deckStatsMap[winner.commander]?.let {
             it.overallWin++
             if (isFinals) {
                 it.tournamentWin++
             }
-            updateStat(it)
+            deckOverviewDao.upsertDeckOverView(it)
         }
 
         if (!deckStatsMap.contains(loser.commander)) {
             val deckOverview = DeckOverview(loser)
             overview.add(deckOverview)
             deckStatsMap.put(loser.commander, deckOverview)
-            addStat(deckOverview)
         }
-        deckStatsMap.get(loser.commander)?.let {
+        deckStatsMap[loser.commander]?.let {
             it.overallLoss++
-            updateStat(it)
+            deckOverviewDao.upsertDeckOverView(it)
         }
     }
 

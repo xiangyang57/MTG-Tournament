@@ -64,7 +64,7 @@ class CurrentMatchFragment : Fragment() {
     }
 
     private fun logStats(winner: Deck, loser: Deck, tournament: Tournament) {
-        mainViewModel.updateStats(requireContext(), winner, loser,
+        mainViewModel.updateStats(winner, loser,
             tournament.brackets[tournament.brackets.lastIndex].size == 1)
     }
 

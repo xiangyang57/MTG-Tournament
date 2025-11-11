@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mtgtourney.data.Deck
 import com.example.mtgtourney.data.DeckRepository
-import com.example.mtgtourney.data.StatsRepository
+import com.example.mtgtourney.data.stats.StatsRepository
 import com.example.mtgtourney.data.Tournament
 import com.example.mtgtourney.data.TournamentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,9 +52,9 @@ class MainViewModel@Inject constructor(
         }
     }
 
-    fun updateStats(context: Context, winner: Deck, loser: Deck, isFinals: Boolean = false) {
+    fun updateStats(winner: Deck, loser: Deck, isFinals: Boolean = false) {
         viewModelScope.launch {
-            statsRepository.logMatchResult(context, winner, loser, isFinals)
+            statsRepository.logMatchResult(winner, loser, isFinals)
         }
     }
 }

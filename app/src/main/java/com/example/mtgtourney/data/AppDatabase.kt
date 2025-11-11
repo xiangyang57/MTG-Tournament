@@ -3,6 +3,8 @@ package com.example.mtgtourney.data
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.mtgtourney.data.stats.DeckOverview
+import com.example.mtgtourney.data.stats.DeckOverviewDao
 
 @Database(entities = [DeckOverview::class],
     version = 1)

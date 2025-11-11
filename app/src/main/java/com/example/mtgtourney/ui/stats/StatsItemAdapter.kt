@@ -3,7 +3,7 @@ package com.example.mtgtourney.ui.stats
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mtgtourney.data.DeckOverview
+import com.example.mtgtourney.data.stats.DeckOverview
 import com.example.mtgtourney.databinding.StatsCardBinding
 
 class StatsItemAdapter(

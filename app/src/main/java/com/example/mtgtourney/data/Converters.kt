@@ -9,12 +9,12 @@ class Converters {
     private val gson = Gson()
 
     @TypeConverter
-    fun fromAddress(deck: Deck): String {
+    fun fromDeck(deck: Deck): String {
         return gson.toJson(deck)
     }
 
     @TypeConverter
-    fun toAddress(value: String): Deck {
+    fun toDeck(value: String): Deck {
         val type = object : TypeToken<Deck>() {}.type
         return gson.fromJson(value, type)
     }

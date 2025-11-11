@@ -8,7 +8,7 @@
         <import type="java.text.DateFormat" />
         <variable
             name="overview"
-            type="com.example.mtgtourney.data.DeckOverview" />
+            type="com.example.mtgtourney.data.stats.DeckOverview" />
     </data>
 
     <LinearLayout

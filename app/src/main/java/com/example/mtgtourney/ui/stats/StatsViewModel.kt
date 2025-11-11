@@ -1,11 +1,10 @@
 package com.example.mtgtourney.ui.stats
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mtgtourney.data.DeckOverview
-import com.example.mtgtourney.data.StatsRepository
+import com.example.mtgtourney.data.stats.DeckOverview
+import com.example.mtgtourney.data.stats.StatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers

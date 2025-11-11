@@ -1,10 +1,11 @@
-package com.example.mtgtourney.data
+package com.example.mtgtourney.data.stats
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 
 @Dao
 interface DeckOverviewDao {
@@ -12,9 +13,6 @@ interface DeckOverviewDao {
     @Query("SELECT * FROM deckOverview")
     suspend fun getAllDeckOverviews(): List<DeckOverview>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addDeckOverView(deckOverview: DeckOverview)
-
-    @Update
-    suspend fun updateDeckOverView(deckOverview: DeckOverview)
+    @Upsert
+    suspend fun upsertDeckOverView(deckOverview: DeckOverview)
 }
