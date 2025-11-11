@@ -11,4 +11,4 @@ data class DeckOverview(
     var participation: Int = 0,
     var overallWin: Int = 0,
     var overallLoss: Int = 0,
-    @PrimaryKey(autoGenerate = true) val id: Int = 0)
+    @PrimaryKey val id: String = deck.commander)
