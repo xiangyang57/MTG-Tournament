@@ -1,0 +1,109 @@
+package com.example.mtgtourney.ui.match
+
+import android.content.Context
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mtgtourney.data.Deck
+import com.example.mtgtourney.data.DeckRepository
+import com.example.mtgtourney.data.Match
+import com.example.mtgtourney.data.Tournament
+import com.example.mtgtourney.data.TournamentRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+@HiltViewModel
+class CurrentMatchViewModel@Inject constructor(
+    private val tournamentRepository: TournamentRepository,
+    private val deckRepository: DeckRepository
+) : ViewModel() {
+    private val winCount = 2
+
+    private val _tournament = MutableStateFlow<Tournament?>(null)
+    private val _match = MutableStateFlow<Match?>(null)
+    val match = _match.asStateFlow()
+    private val _player1VictoryCount = MutableStateFlow(0)
+    val player1VictoryCount = _player1VictoryCount.asStateFlow()
+    private val _player2VictoryCount = MutableStateFlow(0)
+    val player2VictoryCount = _player2VictoryCount.asStateFlow()
+    private val _selectedPlayer = MutableStateFlow<Deck?>(null)
+    val selectedPlayer = _selectedPlayer.asStateFlow()
+
+    fun loadNextMatch(context: Context) {
+        _tournament.value?.let {
+            getNextMatch(it)
+        } ?: run {
+            viewModelScope.launch {
+                val tournament =
+                // This block runs on the IO dispatcher (off the main thread)
+                    // Perform network request or database query here
+                    tournamentRepository.getTournament(context, deckRepository.getDecks(context))
+                withContext(Dispatchers.Main) {
+                    _tournament.value = tournament
+                    getNextMatch(tournament)
+                }
+            }
+        }
+    }
+
+    fun selectPlayer(deck: Deck) {
+        _selectedPlayer.value = deck
+    }
+
+    fun updateTournament(context: Context, match: Match) {
+        _tournament.value?.let { tournament ->
+            val currentBracket = tournament.brackets[tournament.brackets.lastIndex]
+            if (currentBracket.size > 1 && match == currentBracket[currentBracket.lastIndex]) {
+                val nextBracket = mutableListOf<Match>()
+                for (i in 1 until currentBracket.size step 2) {
+                    nextBracket.add(Match(currentBracket[i - 1].winner!!, currentBracket[i].winner))
+                }
+                if (currentBracket.size % 2 == 1) {
+                    nextBracket.add(Match(currentBracket[currentBracket.size - 1].winner!!))
+                }
+                tournament.brackets.add(nextBracket)
+            }
+            viewModelScope.launch {
+                tournamentRepository.updateTournament(context, tournament)
+            }
+        }
+    }
+
+    fun confirmVictory() {
+        _selectedPlayer.value?.let { winner ->
+            if (_match.value?.playerA == winner) {
+                _player1VictoryCount.value++
+                if (_player1VictoryCount.value == winCount) {
+                    _match.value?.winner = winner
+                }
+            } else if (_match.value?.playerB == winner) {
+                _player2VictoryCount.value++
+                if (_player2VictoryCount.value == winCount) {
+                    _match.value?.winner = winner
+                }
+            }
+        }
+        _selectedPlayer.value = null
+    }
+
+    private fun getNextMatch(tournament: Tournament) {
+        _player2VictoryCount.value = 0
+        _player1VictoryCount.value = 0
+        _selectedPlayer.value = null
+        _match.value = null
+        for (i in tournament.brackets.indices) {
+            for (j in tournament.brackets[i].indices) {
+                if (tournament.brackets[i][j].winner == null &&
+                    tournament.brackets[i][j].playerB != null) {
+                    _match.value = tournament.brackets[i][j]
+                    break
+                }
+            }
+        }
+    }
+
+}
