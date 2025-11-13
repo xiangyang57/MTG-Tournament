@@ -16,10 +16,10 @@
         android:layout_margin="@dimen/margin_med"
         tool:text="Round 1"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/round_match_list"
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 
 

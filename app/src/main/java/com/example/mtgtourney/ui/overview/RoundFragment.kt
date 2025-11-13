@@ -6,12 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
+import androidx.compose.material3.MaterialTheme
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mtgtourney.R
 import com.example.mtgtourney.data.Match
 import com.example.mtgtourney.databinding.FragmentRoundBinding
 
@@ -24,7 +21,6 @@ class RoundFragment: Fragment() {
     private val binding get() = _binding!!
     private lateinit var matches: List<Match>
     private var round: Int = 1
-    private lateinit var adapter: MatchItemAdapter
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,20 +35,14 @@ class RoundFragment: Fragment() {
     ): View {
         _binding = FragmentRoundBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val recyclerView = binding.roundMatchList
         binding.roundTitle.text = "Round " + round
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = MatchItemAdapter(matches)
-        recyclerView.adapter = adapter
-        val dividerItemDecoration = DividerItemDecoration(
-            recyclerView.getContext(),
-            LinearLayoutManager.VERTICAL
-        )
-        ContextCompat.getDrawable(requireContext(), R.drawable.divider)?.let {
-            dividerItemDecoration.setDrawable(it)
-        }
-        recyclerView.addItemDecoration(dividerItemDecoration)
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.composeView.setContent { MaterialTheme { MatchList(matches)} }
     }
 
     companion object {

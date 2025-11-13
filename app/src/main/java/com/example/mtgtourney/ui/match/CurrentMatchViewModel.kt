@@ -62,15 +62,12 @@ class CurrentMatchViewModel@Inject constructor(
             if (currentBracket.size > 1 && match == currentBracket[currentBracket.lastIndex]) {
                 val nextBracket = mutableListOf<Match>()
                 for (i in 1 until currentBracket.size step 2) {
-                    nextBracket.add(Match(currentBracket[i - 1].winner!!, currentBracket[i].winner))
-                }
-                if (currentBracket.size % 2 == 1) {
-                    nextBracket.add(Match(currentBracket[currentBracket.size - 1].winner!!))
+                    nextBracket.add(Match(currentBracket[i - 1].winner!!, currentBracket[i].winner!!))
                 }
                 tournament.brackets.add(nextBracket)
             }
             updateStats(match.winner!!,
-                if (match.winner!! == match.playerA) match.playerB!! else match.playerA,
+                if (match.winner!! == match.playerA) match.playerB else match.playerA,
                 currentBracket.size == 1)
             viewModelScope.launch {
                 tournamentRepository.updateTournament(context, tournament)
@@ -102,8 +99,7 @@ class CurrentMatchViewModel@Inject constructor(
         _match.value = null
         for (i in tournament.brackets.indices) {
             for (j in tournament.brackets[i].indices) {
-                if (tournament.brackets[i][j].winner == null &&
-                    tournament.brackets[i][j].playerB != null) {
+                if (tournament.brackets[i][j].winner == null) {
                     _match.value = tournament.brackets[i][j]
                     break
                 }

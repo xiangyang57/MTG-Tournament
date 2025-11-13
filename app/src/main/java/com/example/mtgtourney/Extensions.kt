@@ -5,6 +5,7 @@ import com.example.mtgtourney.data.Match
 import com.example.mtgtourney.data.Tournament
 import kotlin.math.min
 
+// Valid match will be created if deck size is not divisible by 2 the last deck will be cut
 fun List<Deck>.createTournament(tournamentSize: Int = Int.MAX_VALUE): Tournament {
     val targetSize = min(size, tournamentSize)
     if (targetSize < 2) {
@@ -15,9 +16,6 @@ fun List<Deck>.createTournament(tournamentSize: Int = Int.MAX_VALUE): Tournament
 
     for (i in 1 until targetSize step 2) {
         matches.add(Match(shuffled[i-1], shuffled[i]))
-    }
-    if (targetSize % 2 == 1) {
-        matches.add(Match(shuffled[shuffled.size-1], null, shuffled[shuffled.size-1]))
     }
     return Tournament(mutableListOf(matches))
 }

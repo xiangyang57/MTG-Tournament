@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -100,12 +102,16 @@ fun CurrentMatchScreen(
             Button(
                 onClick = { viewModel.confirmVictory() },
                 enabled = selectedPlayer != null,
+                elevation = ButtonDefaults.elevatedButtonElevation(
+                    defaultElevation = 6.dp
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(dimensionResource(id = R.dimen.button))
+                    .heightIn(min = dimensionResource(id = R.dimen.button))
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = stringResource(id = R.string.dialog_confirm))
+                Text(text = stringResource(id = R.string.dialog_confirm).uppercase(),
+                style = MaterialTheme.typography.labelLarge)
             }
         }
 

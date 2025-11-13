@@ -6,6 +6,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Match(
     val playerA: Deck,
-    val playerB: Deck? = null,
+    val playerB: Deck,
     var winner: Deck? = null
 ) : Parcelable
