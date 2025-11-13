@@ -37,7 +37,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mtgtourney.R
-import com.example.mtgtourney.data.Deck
 import com.example.mtgtourney.data.Match
 
 @Composable
@@ -170,9 +169,6 @@ fun VictoryIndicators(
         repeat(2) { index ->
             Image(
                 painter = painterResource(
-                    // 2 -1 , 2 - 0
-                    // 2 - 1, 2 - 0
-                    // 2 - 1, 2- 0
                     id = if (2 - index > playerOneWins)
                         R.drawable.victory_indicator
                     else

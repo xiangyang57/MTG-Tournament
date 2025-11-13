@@ -37,6 +37,7 @@ class OverviewFragment : Fragment() {
             bottomSheet.show(parentFragmentManager, "ResetDialogFragment")
         }
         binding.viewpager.setSaveEnabled(false)
+        mainViewModel.initTournament(requireContext())
         mainViewModel.tournamentLiveData.observe(viewLifecycleOwner) {
             adapter = RoundPagerAdapter(activity as FragmentActivity, it.brackets)
             binding.viewpager.adapter = null

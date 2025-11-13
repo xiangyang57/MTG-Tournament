@@ -8,6 +8,7 @@ import com.example.mtgtourney.data.DeckRepository
 import com.example.mtgtourney.data.Match
 import com.example.mtgtourney.data.Tournament
 import com.example.mtgtourney.data.TournamentRepository
+import com.example.mtgtourney.data.stats.StatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,8 @@ import kotlinx.coroutines.withContext
 @HiltViewModel
 class CurrentMatchViewModel@Inject constructor(
     private val tournamentRepository: TournamentRepository,
-    private val deckRepository: DeckRepository
+    private val deckRepository: DeckRepository,
+    private val statsRepository: StatsRepository
 ) : ViewModel() {
     private val winCount = 2
 
@@ -33,10 +35,10 @@ class CurrentMatchViewModel@Inject constructor(
     private val _selectedPlayer = MutableStateFlow<Deck?>(null)
     val selectedPlayer = _selectedPlayer.asStateFlow()
 
-    fun loadNextMatch(context: Context) {
-        _tournament.value?.let {
-            getNextMatch(it)
-        } ?: run {
+    fun loadNextMatch(context: Context, forceRefresh: Boolean = false) {
+        if (_tournament.value != null && !forceRefresh) {
+            getNextMatch(_tournament.value!!)
+        } else {
             viewModelScope.launch {
                 val tournament =
                 // This block runs on the IO dispatcher (off the main thread)
@@ -67,6 +69,9 @@ class CurrentMatchViewModel@Inject constructor(
                 }
                 tournament.brackets.add(nextBracket)
             }
+            updateStats(match.winner!!,
+                if (match.winner!! == match.playerA) match.playerB!! else match.playerA,
+                currentBracket.size == 1)
             viewModelScope.launch {
                 tournamentRepository.updateTournament(context, tournament)
             }
@@ -103,6 +108,12 @@ class CurrentMatchViewModel@Inject constructor(
                     break
                 }
             }
+        }
+    }
+
+    private fun updateStats(winner: Deck, loser: Deck, isFinals: Boolean = false) {
+        viewModelScope.launch {
+            statsRepository.logMatchResult(winner, loser, isFinals)
         }
     }
 
