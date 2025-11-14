@@ -97,7 +97,6 @@ fun CurrentMatchScreen(
                         .padding(vertical = 8.dp)
                 )
             }
-
             // Confirm Victor Button
             Button(
                 onClick = { viewModel.confirmVictory() },

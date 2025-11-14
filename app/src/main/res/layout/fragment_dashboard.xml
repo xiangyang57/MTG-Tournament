@@ -19,6 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/button"
         android:layout_marginHorizontal="16dp"
-        android:text="Reset Tournament"
+        android:text="@string/dialog_title"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
