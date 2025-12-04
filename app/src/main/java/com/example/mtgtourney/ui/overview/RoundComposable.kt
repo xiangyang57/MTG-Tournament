@@ -28,8 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.mtgtourney.R
-import com.example.mtgtourney.data.Deck
-import com.example.mtgtourney.data.Match
+import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.tournament.Match
 
 @Composable
 fun MatchItem(
@@ -82,8 +82,10 @@ private fun PlayerCard(
 ) {
     Card(
         modifier = modifier
-            .padding(horizontal = dimensionResource(R.dimen.margin_med),
-                vertical = dimensionResource(R.dimen.margin_small))
+            .padding(
+                horizontal = dimensionResource(R.dimen.margin_med),
+                vertical = dimensionResource(R.dimen.margin_small)
+            )
             .height(dimensionResource(R.dimen.match_loss_icon)),
         shape = MaterialTheme.shapes.small,
         colors = CardDefaults.cardColors(

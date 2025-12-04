@@ -1,7 +1,9 @@
-package com.example.mtgtourney.data
+package com.example.mtgtourney.data.tournament
 
 import android.content.Context
 import com.example.mtgtourney.createTournament
+import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.TOURNAMENT
 import com.google.gson.Gson
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers

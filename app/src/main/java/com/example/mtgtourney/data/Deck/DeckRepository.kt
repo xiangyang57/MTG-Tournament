@@ -1,4 +1,4 @@
-package com.example.mtgtourney.data
+package com.example.mtgtourney.data.Deck
 
 import android.content.Context
 import android.util.Log
@@ -17,7 +17,7 @@ class DeckRepository @Inject constructor(){
         withContext(Dispatchers.IO) {
             val decks = try {
                 val deckListFile =
-                    appContext.openFileInput(DECK_LIST).bufferedReader().useLines { lines ->
+                    appContext.openFileInput(_root_ide_package_.com.example.mtgtourney.data.DECK_LIST).bufferedReader().useLines { lines ->
                         lines.fold("") { start, end ->
                             "$start $end"
                         }
@@ -41,6 +41,6 @@ class DeckRepository @Inject constructor(){
 
     private fun toList(json: String): List<Deck> {
         val gson = Gson()
-        return gson.fromJson(json, object : TypeToken<List<Deck>>() {}.type)
+        return gson.fromJson(json, object : com.google.gson.reflect.TypeToken<List<Deck>>() {}.type)
     }
 }

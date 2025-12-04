@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mtgtourney.data.Deck
-import com.example.mtgtourney.data.DeckRepository
+import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.Deck.DeckRepository
 import com.example.mtgtourney.data.stats.StatsRepository
-import com.example.mtgtourney.data.Tournament
-import com.example.mtgtourney.data.TournamentRepository
+import com.example.mtgtourney.data.tournament.Tournament
+import com.example.mtgtourney.data.tournament.TournamentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers

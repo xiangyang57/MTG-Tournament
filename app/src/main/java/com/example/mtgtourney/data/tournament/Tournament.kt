@@ -1,4 +1,6 @@
-package com.example.mtgtourney.data
+package com.example.mtgtourney.data.tournament
+
+import com.example.mtgtourney.data.tournament.Match
 
 data class Tournament(
     // Each list of matches represents a tier of the competition with all competitors in the

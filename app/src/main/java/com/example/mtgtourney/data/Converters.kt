@@ -1,6 +1,7 @@
 package com.example.mtgtourney.data
 
 import androidx.room.TypeConverter
+import com.example.mtgtourney.data.Deck.Deck
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

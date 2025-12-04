@@ -3,7 +3,7 @@ package com.example.mtgtourney.ui.overview
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.mtgtourney.data.Match
+import com.example.mtgtourney.data.tournament.Match
 
 class RoundPagerAdapter(
     fragmentActivity: FragmentActivity,

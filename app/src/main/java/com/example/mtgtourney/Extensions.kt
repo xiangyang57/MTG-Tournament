@@ -1,8 +1,8 @@
 package com.example.mtgtourney
 
-import com.example.mtgtourney.data.Deck
-import com.example.mtgtourney.data.Match
-import com.example.mtgtourney.data.Tournament
+import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.tournament.Match
+import com.example.mtgtourney.data.tournament.Tournament
 import kotlin.math.min
 
 // Valid match will be created if deck size is not divisible by 2 the last deck will be cut

@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.material3.MaterialTheme
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import com.example.mtgtourney.data.Match
+import com.example.mtgtourney.data.tournament.Match
 import com.example.mtgtourney.databinding.FragmentRoundBinding
 
 class RoundFragment: Fragment() {
