@@ -2,6 +2,7 @@ package com.example.mtgtourney.data
 
 import androidx.room.TypeConverter
 import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.tournament.Match
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -17,6 +18,17 @@ class Converters {
     @TypeConverter
     fun toDeck(value: String): Deck {
         val type = object : TypeToken<Deck>() {}.type
+        return gson.fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromMatch(match: Match): String {
+        return gson.toJson(match)
+    }
+
+    @TypeConverter
+    fun toMatch(value: String): Match {
+        val type = object : TypeToken<Match>() {}.type
         return gson.fromJson(value, type)
     }
 }

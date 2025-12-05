@@ -22,14 +22,14 @@ class MainViewModel@Inject constructor(
     private val statsRepository: StatsRepository
 ) : ViewModel() {
 
-    val tournamentLiveData: MutableLiveData<Tournament> = MutableLiveData()
+    val tournamentLiveData: MutableLiveData<Tournament?> = MutableLiveData()
 
-    fun initTournament(context: Context) {
+    fun initTournament() {
         viewModelScope.launch {
             val tournament =
                 // This block runs on the IO dispatcher (off the main thread)
                 // Perform network request or database query here
-                tournamentRepository.getTournament(context, deckRepository.getDecks(context))
+                tournamentRepository.getTournament()
             withContext(Dispatchers.Main) {
                 tournamentLiveData.value = tournament
             }
@@ -40,21 +40,8 @@ class MainViewModel@Inject constructor(
         viewModelScope.launch {
             val decks = deckRepository.getDecks(context)
             tournamentRepository.updateTournament(
-                context,
                 decks.createTournament(tournamentSize))
-            initTournament(context)
-        }
-    }
-
-    fun updateTournament(context: Context, tournament: Tournament) {
-        viewModelScope.launch {
-            tournamentRepository.updateTournament(context, tournament)
-        }
-    }
-
-    fun updateStats(winner: Deck, loser: Deck, isFinals: Boolean = false) {
-        viewModelScope.launch {
-            statsRepository.logMatchResult(winner, loser, isFinals)
+            initTournament()
         }
     }
 }
