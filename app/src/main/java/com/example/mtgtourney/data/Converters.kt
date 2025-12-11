@@ -22,13 +22,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromMatch(match: Match): String {
-        return gson.toJson(match)
+    fun fromMatchList(matchList: MutableList<MutableList<Match>>): String {
+        return gson.toJson(matchList)
     }
 
     @TypeConverter
-    fun toMatch(value: String): Match {
-        val type = object : TypeToken<Match>() {}.type
+    fun toMatchList(value: String): MutableList<MutableList<Match>> {
+        val type = object : TypeToken<MutableList<MutableList<Match>>>() {}.type
         return gson.fromJson(value, type)
     }
 }

@@ -38,12 +38,15 @@ class OverviewFragment : Fragment() {
         }
         binding.viewpager.setSaveEnabled(false)
         mainViewModel.initTournament()
-        mainViewModel.tournamentLiveData.observe(viewLifecycleOwner) {
-            adapter = RoundPagerAdapter(activity as FragmentActivity, it.brackets)
-            binding.viewpager.adapter = null
-            binding.viewpager.post { binding.viewpager.adapter = adapter
+        mainViewModel.tournamentLiveData.observe(viewLifecycleOwner) { tournament ->
+            tournament?.let {
+                adapter = RoundPagerAdapter(activity as FragmentActivity, it.brackets)
+                binding.viewpager.adapter = null
                 binding.viewpager.post {
-                    binding.viewpager.currentItem = it.brackets.size-1
+                    binding.viewpager.adapter = adapter
+                    binding.viewpager.post {
+                        binding.viewpager.currentItem = it.brackets.size - 1
+                    }
                 }
             }
         }

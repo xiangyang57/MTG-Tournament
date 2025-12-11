@@ -3,6 +3,7 @@ package com.example.mtgtourney.data
 import android.content.Context
 import androidx.room.Room
 import com.example.mtgtourney.data.stats.DeckOverviewDao
+import com.example.mtgtourney.data.tournament.TournamentDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +26,7 @@ class DatabaseModule {
 
     @Provides
     fun providesDeckOverViewDao(database: AppDatabase): DeckOverviewDao = database.deckOverViewDao()
+
+    @Provides
+    fun providesTournamentDao(database: AppDatabase): TournamentDao = database.tournamentDao()
 }

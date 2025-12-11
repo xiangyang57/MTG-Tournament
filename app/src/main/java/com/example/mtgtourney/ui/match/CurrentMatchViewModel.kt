@@ -43,10 +43,10 @@ class CurrentMatchViewModel@Inject constructor(
                 val tournament =
                 // This block runs on the IO dispatcher (off the main thread)
                     // Perform network request or database query here
-                    tournamentRepository.getTournament(context, deckRepository.getDecks(context))
+                    tournamentRepository.getTournament()
                 withContext(Dispatchers.Main) {
                     _tournament.value = tournament
-                    getNextMatch(tournament)
+                    tournament?.let { getNextMatch(it) }
                 }
             }
         }
@@ -70,7 +70,7 @@ class CurrentMatchViewModel@Inject constructor(
                 if (match.winner!! == match.playerA) match.playerB else match.playerA,
                 currentBracket.size == 1)
             viewModelScope.launch {
-                tournamentRepository.updateTournament(context, tournament)
+                tournamentRepository.updateTournament(tournament)
             }
         }
     }

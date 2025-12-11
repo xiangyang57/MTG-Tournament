@@ -35,6 +35,6 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        viewModel.initTournament(applicationContext)
+        viewModel.initTournament()
     }
 }
