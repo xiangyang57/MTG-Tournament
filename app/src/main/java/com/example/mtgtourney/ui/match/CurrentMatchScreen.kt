@@ -40,7 +40,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mtgtourney.R
+import com.example.mtgtourney.data.deck.Deck
 import com.example.mtgtourney.data.tournament.Match
+import com.example.mtgtourney.ui.common.DeckColors
 
 @Composable
 fun CurrentMatchScreen(
@@ -68,7 +70,7 @@ fun CurrentMatchScreen(
             // Player One Card
             match?.playerA?.let { player ->
                 PlayerCard(
-                    playerName = player.commander,
+                    deck = player,
                     isSelected = selectedPlayer == player,
                     backgroundColor = colorResource(id = R.color.player1),
                     onCardClick = { viewModel.selectPlayer(player) },
@@ -88,7 +90,7 @@ fun CurrentMatchScreen(
             // Player Two Card
             match?.playerB?.let { player ->
                 PlayerCard(
-                    playerName = player.commander,
+                    deck = player,
                     isSelected = selectedPlayer == player,
                     backgroundColor = colorResource(id = R.color.player2),
                     onCardClick = { viewModel.selectPlayer(player) },
@@ -123,7 +125,7 @@ fun CurrentMatchScreen(
 
 @Composable
 fun PlayerCard(
-    playerName: String,
+    deck: Deck,
     isSelected: Boolean,
     backgroundColor: Color,
     onCardClick: () -> Unit,
@@ -147,13 +149,15 @@ fun PlayerCard(
                 .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.margin_med))) {
                 Text(
-                    text = playerName,
+                    text = deck.commander,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
                 )
+                DeckColors(deck)
             }
         }
     }
