@@ -1,0 +1,1 @@
+A Hobby app where user can add their list of commander decks and autogenerate tournaments of up to 32 decks at a time. The app records wins and losses and is a quick and fun way to test your pod when playing with friends
