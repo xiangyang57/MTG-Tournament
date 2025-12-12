@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.mtgtourney.R
-import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.deck.Deck
 import com.example.mtgtourney.data.tournament.Match
 
 @Composable

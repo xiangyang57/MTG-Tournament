@@ -1,10 +1,8 @@
-package com.example.mtgtourney.data.Deck
+package com.example.mtgtourney.data.deck
 
 import android.content.Context
-import android.util.Log
 import com.example.mtgtourney.R
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

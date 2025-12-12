@@ -1,6 +1,6 @@
 package com.example.mtgtourney.data.stats
 
-import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.deck.Deck
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex

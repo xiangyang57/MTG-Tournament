@@ -1,7 +1,7 @@
 package com.example.mtgtourney.data.tournament
 
 import android.os.Parcelable
-import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.deck.Deck
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

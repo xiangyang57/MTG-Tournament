@@ -1,6 +1,6 @@
 package com.example.mtgtourney
 
-import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.deck.Deck
 import com.example.mtgtourney.data.tournament.Match
 import com.example.mtgtourney.data.tournament.Tournament
 import kotlin.math.min

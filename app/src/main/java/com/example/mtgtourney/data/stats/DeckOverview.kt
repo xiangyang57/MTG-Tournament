@@ -2,7 +2,7 @@ package com.example.mtgtourney.data.stats
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.mtgtourney.data.Deck.Deck
+import com.example.mtgtourney.data.deck.Deck
 
 @Entity(tableName = "deckOverview")
 data class DeckOverview(
