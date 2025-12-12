@@ -6,6 +6,7 @@
     <data>
         <import type="android.view.View" />
         <import type="java.text.DateFormat" />
+        <import type="com.example.mtgtourney.ui.common.CommanderRes"/>
         <variable
             name="overview"
             type="com.example.mtgtourney.data.stats.DeckOverview" />
@@ -22,6 +23,7 @@
             android:layout_margin="@dimen/margin_small"
             app:cardCornerRadius="@dimen/margin_med">
             <ImageView
+                android:id="@+id/commander_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
