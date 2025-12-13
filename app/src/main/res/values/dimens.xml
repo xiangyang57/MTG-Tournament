@@ -14,5 +14,7 @@
     <dimen name="color_icon">24dp</dimen>
     <dimen name="match_description">14sp</dimen>
     <dimen name="match_loss_icon">48dp</dimen>
+    <dimen name="match_commander_icon">112dp</dimen>
     <dimen name="stat_profile">128dp</dimen>
+
 </resources>

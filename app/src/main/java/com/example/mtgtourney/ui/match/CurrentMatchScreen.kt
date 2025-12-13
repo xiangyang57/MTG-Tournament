@@ -2,6 +2,7 @@ package com.example.mtgtourney.ui.match
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -28,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -42,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.example.mtgtourney.R
 import com.example.mtgtourney.data.deck.Deck
 import com.example.mtgtourney.data.tournament.Match
+import com.example.mtgtourney.ui.common.CommanderRes
 import com.example.mtgtourney.ui.common.DeckColors
 
 @Composable
@@ -151,6 +155,20 @@ fun PlayerCard(
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.margin_med))) {
+                Image(
+                    painter = painterResource(CommanderRes.getCommanderRes(deck.commander)),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(dimensionResource(R.dimen.match_commander_icon))
+                        .clip(CircleShape)
+                        .border(
+                            width = dimensionResource(R.dimen.margin_small),
+                            color = Color.Black,
+                            shape = CircleShape
+                        )
+                )
                 Text(
                     text = deck.commander,
                     fontSize = 24.sp,

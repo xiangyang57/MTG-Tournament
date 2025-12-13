@@ -5,11 +5,10 @@ import com.example.mtgtourney.data.stats.DeckOverview
 import com.example.mtgtourney.databinding.StatsCardBinding
 import com.example.mtgtourney.ui.common.CommanderRes
 
-class StatsItemCard(private val binding: StatsCardBinding,
-    private val commanderRes: CommanderRes): RecyclerView.ViewHolder(binding.root) {
+class StatsItemCard(private val binding: StatsCardBinding): RecyclerView.ViewHolder(binding.root) {
     fun bind(overview: DeckOverview) {
         binding.overview = overview
-        binding.commanderImage.setImageResource(commanderRes.getCommanderRes(overview.deck.commander))
+        binding.commanderImage.setImageResource(CommanderRes.getCommanderRes(overview.deck.commander))
         binding.executePendingBindings()
     }
 }

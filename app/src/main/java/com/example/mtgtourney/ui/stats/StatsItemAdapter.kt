@@ -11,14 +11,12 @@ class StatsItemAdapter(
     private val stats: List<DeckOverview>
 ): RecyclerView.Adapter<StatsItemCard>() {
 
-    private val commanderRes = CommanderRes()
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): StatsItemCard {
         val inflater = LayoutInflater.from(parent.context)
-        return StatsItemCard(StatsCardBinding.inflate(inflater, parent, false), commanderRes)
+        return StatsItemCard(StatsCardBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(

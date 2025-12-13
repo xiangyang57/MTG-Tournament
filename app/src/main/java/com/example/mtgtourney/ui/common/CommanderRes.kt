@@ -2,11 +2,9 @@ package com.example.mtgtourney.ui.common
 
 import androidx.annotation.DrawableRes
 import com.example.mtgtourney.R
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class CommanderRes @Inject constructor() {
+object CommanderRes{
+
     private val commanderRes = hashMapOf<String, Int>()
 
     init {
