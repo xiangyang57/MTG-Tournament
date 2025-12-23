@@ -124,6 +124,22 @@
         "colors": ["RED"]
     },
     {
+        "commander": "Fire Lord Azula",
+        "colors": ["BLUE, BLACK, RED"]
+    },
+    {
+        "commander": "Toph, the First Metalbender",
+        "colors": ["RED, GREEN, WHITE"]
+    },
+    {
+        "commander": "Felothar the Steadfast",
+        "colors": ["WHITE, BLACK, GREEN"]
+    },
+    {
+        "commander": "Ureni of the Unwritten",
+        "colors": ["GREEN, BLUE, RED"]
+    },
+    {
         "commander": "Wilhelt, the Rotcleaver",
         "colors": ["BLUE", "BLACK"]
     }

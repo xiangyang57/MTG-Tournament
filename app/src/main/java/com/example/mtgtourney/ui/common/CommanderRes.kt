@@ -40,6 +40,10 @@ object CommanderRes{
         commanderRes.put("Vorinclex, Voice of Hunger", R.drawable.vorinclex)
         commanderRes.put("Krenko, Mob Boss", R.drawable.krenko)
         commanderRes.put("Wilhelt, the Rotcleaver", R.drawable.wilhelt)
+        commanderRes.put("Firelord Azula", R.drawable.azula)
+        commanderRes.put("Ureni of the Unwritten", R.drawable.ureni)
+        commanderRes.put("Toph, the First Metalbender", R.drawable.toph)
+        commanderRes.put("Felothar the Steadfast", R.drawable.felothar)
     }
 
     @DrawableRes
